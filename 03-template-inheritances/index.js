@@ -14,6 +14,9 @@ app.get("/about",(req,res)=>{
     res.render("about.hbs")
 })
 
+app.get("/contact",(req,res)=>{
+    res.render("contact.hbs")
+})
 
 app.listen(3000, ()=>{
     console.log("Sever started")
