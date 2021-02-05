@@ -13,6 +13,7 @@
     <tr>
         <td>{{this.title}}</td>
         <td>{{this.plot}}</td>
+        <td><a href="/edit/{{this._id.$oid}}" class="btn btn-success btn-sm">Edit</a></td>
         <td><a href="/delete/{{this._id.$oid}}" class="btn btn-danger btn-sm">Delete</a></td>
     </tr>
     {{/each}}

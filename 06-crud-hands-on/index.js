@@ -44,22 +44,46 @@ app.post("/new", async (req, res) => {
 
 // Third Route to delete movie
 // GET
-app.get("/delete/:movieid", async (req,res)=>{
+app.get("/delete/:movieid", async (req, res) => {
     let movieId = req.params.movieid
     let response = await axios.get(`${baseURL}/movie/${movieId}`);
     let movie = response.data
-    res.render("delete",{
-        deleteMovie : movie
+    res.render("delete", {
+        deleteMovie: movie
     })
 })
 
-// POST
-app.post("/delete/:movieid", async(req,res)=>{
+// POST & DELETE
+app.post("/delete/:movieid", async (req, res) => {
     let movieId = req.params.movieid
     let response = await axios.delete(`${baseURL}/movie/${movieId}`)
     res.redirect("/all");
 })
 
+// Fourth Route to edit movie
+// GET
+app.get("/edit/:movieid", async (req, res) => {
+    let movieId = req.params.movieid
+    let response = await axios.get(`${baseURL}/movie/${movieId}`);
+    let movie = response.data
+    res.render("edit", {
+        editMovie: movie
+    })
+})
+
+// POST & EDIT
+app.post("/edit/:movieid", async (req, res) => {
+    let movieId = req.params.movieid
+    let movieName = req.body.movie
+    let plotName = req.body.plot
+    let postLoad = {
+        title: movieName,
+        plot: plotName,
+    }
+    let response = await axios.patch(`${baseURL}/movie/${movieId}`,postLoad)
+    res.redirect("/all")
+})
+///movie/<movie_id>
 // Route Ends
 // Sever Starts
 app.listen(3000, () => {
