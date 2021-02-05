@@ -25,14 +25,23 @@ app.get('/all', async (req, res) => {
         all_movies: response.data
     })
 })
+// Second Route to see the create new movie form
+app.get("/new", (req, res) => {
+    res.render("new")
+})
 
-// app.post("/bmi", (req,res)=>{
-//     let height = req.body.height
-//     let weight = req.body.weight
-//     console.log(height,weight)
-//     let bmi = weight / height**2
-//     res.send(`Your BMI is ${bmi.toFixed(2)}.`)
-// })
+// Second Route to post new movie
+app.post("/new", async (req, res) => {
+    let movieName = req.body.movie
+    let plotName = req.body.plot
+    let postLoad = {
+        title: movieName,
+        plot: plotName,
+    }
+    let response = await axios.post(baseURL + "movie/create", postLoad);
+    res.redirect("/all")
+})
+
 // Route Ends
 // Sever Starts
 app.listen(3000, () => {
