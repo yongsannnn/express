@@ -42,6 +42,24 @@ app.post("/new", async (req, res) => {
     res.redirect("/all")
 })
 
+// Third Route to delete movie
+// GET
+app.get("/delete/:movieid", async (req,res)=>{
+    let movieId = req.params.movieid
+    let response = await axios.get(`${baseURL}/movie/${movieId}`);
+    let movie = response.data
+    res.render("delete",{
+        deleteMovie : movie
+    })
+})
+
+// POST
+app.post("/delete/:movieid", async(req,res)=>{
+    let movieId = req.params.movieid
+    let response = await axios.delete(`${baseURL}/movie/${movieId}`)
+    res.redirect("/all");
+})
+
 // Route Ends
 // Sever Starts
 app.listen(3000, () => {
