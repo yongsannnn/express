@@ -21,7 +21,17 @@ app.use(express.urlencoded({
 async function main(){
     let db = await MongoUtil.connect(mongoUrl, "food_recipes")
 
-    app.get("/")
+    app.get("/ingredients/create", (req,res)=>{
+        res.render("ingredients/create")
+    })
+
+    app.post("/ingredients/create",async (req,res)=>{
+        await db.collection("recipes").insertOne({
+            "name" : req.body.ingredientName
+        })
+
+        res.send("Ingredient has been added");
+    })
 }
 main();
 //Sever Starts
