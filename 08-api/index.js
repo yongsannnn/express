@@ -1,25 +1,17 @@
 //Setup Starts
 const express = require('express');
-const hbs = require('hbs');
-const wax = require('wax-on');
-
-//Calling folder for .env file and put it in operating system
-require("dotenv").config();
-//Now it can be access by process.env 
-const mongoUrl = process.env.MONGO_URL;
-const MongoUtil = require("./MongoUtil");
-const ObjectId = require("mongodb").ObjectId;
-// create an instance of express app
+const cors = require("cors")
 let app = express();
 
-app.set('view engine', 'hbs');
-app.use(express.static('public'));
-wax.on(hbs.handlebars);
-wax.setLayoutPath('./views/layouts')
+// Enable Forms process
 app.use(express.urlencoded({
     extended: false
 }))
 
+app.use(cors());
+
+// Enable processing JSON data
+app.use(express.json());
 //Setup Ends
 
 app.get("/api/greetings", (req,res)=>{
@@ -28,7 +20,11 @@ app.get("/api/greetings", (req,res)=>{
 
 })
 
-
+app.post("/api/sayhello", (req,res)=>{
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    res.send({"message" : "Hello there " + firstName + " " + lastName})
+})
 //Sever Starts
 app.listen(3000, () => {
     console.log("server has started")
